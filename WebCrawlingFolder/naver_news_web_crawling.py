@@ -20,7 +20,7 @@ class xitem:
         self.term = term
 
     def __str__(self):
-        return 'title:' + self.title + ', link:' + self.link + ', source:' + self.source + ', term:' + self.term
+        return 'title:' + self.title + ', link:' + self.link + ', source:' + self.source + ', term:' + str(self.term)
 
 
 def get_news_items(url):
@@ -37,7 +37,7 @@ def get_news_items(url):
         p1 = x.find_parent().find_parent()
         p2 = p1.find('dd', {'class': 'txt_inline'})
         source = p2.find('span', {'class': '_sp_each_source'}).get_text()
-        term = p2.find(string=re.compile('[0-9]'))
+        term = p2.find(string=re.compile(r'([0-9]+(분 전|시간 전|일 전)) | (\d{4}.\d{2}.\d{2})'))
 
         xitem_list.append(xitem(title, link, source, term))
 
