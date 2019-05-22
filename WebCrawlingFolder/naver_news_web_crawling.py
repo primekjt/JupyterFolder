@@ -8,8 +8,9 @@ from openpyxl import Workbook
 import datetime
 
 """
+(venv_name)command>pip installer pyinstaller
 # exe file make
-command> python -O -m PyInstaller --onefile naver_news_web_crawling.py
+(venv_name)command> python -O -m PyInstaller --onefile naver_news_web_crawling.py
 """
 
 class xitem:
