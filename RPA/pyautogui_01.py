@@ -43,7 +43,7 @@ def notepad_test():
     screenWidth, screenHeight = pyautogui.size()
     pyautogui.moveTo(screenWidth / 2, screenHeight / 2)
 
-    pyautogui.typewrite("prime200*", interval=0.5)
+    pyautogui.typewrite("abcdeefghizklmn", interval=0.5)
 
 # - 이미지 File이름, 검출 대상이 될 영역을 입력받아 이미지를 검출하는 함수
 def findLcationWithImage(fileName, startPos, confidence=.7):
@@ -128,8 +128,8 @@ def nsm_test():
 
 def main():
     #mspaint_test()
-    #notepad_test()
-    nsm_test()
+    notepad_test()
+    #nsm_test()
     pyautogui.alert('This displays some text with an OK button.')
 
     print('Good By!')
