@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-                              #한글 인코딩
+
 """
 2019.05.22
 To install this package with conda run one of the following:
