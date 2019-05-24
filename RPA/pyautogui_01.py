@@ -2,6 +2,8 @@
 
 """
 2019.05.22
+https://anaconda.org 사이트에서 필요한 모듈을 검색하여 사용하면 된다.
+
 To install this package with conda run one of the following:
 conda install -c conda-forge pyautogui
 conda install -c conda-forge/label/cf201901 pyautogui
@@ -10,6 +12,7 @@ import pyautogui
 import os
 import sys
 import time
+import pyperclip
 
 def mspaint_test():
     # setting fail safes
@@ -99,20 +102,13 @@ def nsm_test():
     #pyautogui.moveTo(x, y)
     pyautogui.click(x, y, 1)
     time.sleep(1)
-    print('focus')
 
-    pyautogui.typewrite("prime200*", interval=2)
-    #pyautogui.press(['p','2', '0', '0'], interval=1)
-
-    print('typing end')
-    #pyautogui.typewrite('200', interval=0.25)
-
-    #pyautogui.keyDown('shift')
-    #pyautogui.typewrite('8', interval=0.25)
-    #pyautogui.keyUp('shift')
+    pyperclip.copy('prime200*')
+    pyautogui.click(x=260, y=450)  # excel 'File' setFocus
+    pyautogui.hotkey('ctrl', 'v', interval=0.15)
 
     pyautogui.moveRel(60, 0, 0.5)
-    #pyautogui.click()
+    pyautogui.click()
 
 
 """
@@ -130,9 +126,10 @@ def nsm_test():
 
 def main():
     #mspaint_test()
-    notepad_test()
-    #nsm_test()
-    pyautogui.alert('This displays some text with an OK button.')
+    #notepad_test()
+    nsm_test()
+
+    #pyautogui.alert('This displays some text with an OK button.')
 
     print('Good By!')
 

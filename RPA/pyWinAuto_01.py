@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-                              #한글 인코딩
 
 """
+https://anaconda.org 사이트에서 필요한 모듈을 검색하여 사용하면 된다.
+
 conda install -c conda-forge pywinauto
 conda install -c conda-forge/label/cf201901 pywinauto
 #pip install --upgrade pywinauto
