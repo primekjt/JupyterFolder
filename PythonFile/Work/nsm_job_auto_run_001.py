@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-                              #한글 인코딩
+﻿#-*- coding: utf-8 -*-                              #한글 인코딩
 import pyautogui
 import os
 import sys
@@ -14,6 +14,32 @@ conda install -c conda-forge pyperclip
 # setting fail safes
 pyautogui.FAIL_SAFE = True
 pyautogui.PAUSE = 1
+
+def parameter_check():
+    #print(len(sys.argv), sys.argv)
+    result = tuple
+    options_len = len(sys.argv)
+    if options_len is 1:
+        today = datetime.datetime.today()  # datetime.datetime.now
+        yesterday = today + datetime.timedelta(days=-1)  # 오늘에서 1일을 빼서 어제를 구한다
+        order_from_day = yesterday.strftime('%Y%m%d')
+        order_to_day = order_from_day
+    elif options_len is 3:
+        order_from_day = sys.argv[2].replace('.', '')
+        order_to_day = order_from_day
+    elif options_len is 5:
+        order_from_day = sys.argv[2].replace('.', '')
+        order_to_day = sys.argv[4].replace('.', '')
+
+    if not len(order_from_day) is 8:
+        print('invalid from day %s' % order_from_day)
+        sys.exit()
+    if not len(order_to_day) is 8:
+        print('invalid to day %s' % order_to_day)
+        sys.exit()
+
+    print('to day : %s, from day : %s' % (order_from_day, order_to_day))
+    return (order_from_day, order_to_day)   # tuple return
 
 def nsm_login():
     pyperclip.copy('prime200*')
@@ -69,43 +95,58 @@ def job_main_001(order_day):
     pyautogui.moveTo(304, 47)  # 조회
     pyautogui.click()
 
-    pyautogui.moveTo(758, 47)   # 엑셀 저장
-    #pyautogui.moveRel(455, None)   # 엑셀 저장
+    time.sleep(3)
+
+    pyautogui.moveTo(758, 47, duration=1)   # 엑셀
+    #pyautogui.moveRel(455, None)   # 엑셀
     pyautogui.click()
     pyautogui.press(['tab', 'enter'])   # NSM 'Excel 파일을 저장하시겠습니까?' -> 아니오(N)
 
-    pyautogui.click(x=640, y=10)   # excel 'File' setFocus
+    time.sleep(3)
 
-    pyautogui.hotkey('alt', 'f2')   # 다른 이름으로 저장
-    #save_file_name = 'order_' + type_day
-    save_file_name = '000_' + order_day
-    pyautogui.typewrite(save_file_name, interval=0.25)   #999
-    #pyautogui.typewrite(['a', 'b', 'c'])
+    pyautogui.click(x=640, y=10)   # excel 'File' setFocus
+    time.sleep(1)
+
+    pyautogui.hotkey('alt', 'f2', interval = 0.5)  # 다른 이름으로 저장
+    time.sleep(1)
     pyautogui.press('enter')    # 저장(S)
     try:
     #  주의) Sheet1.xlsx 기존 파일이 있어 덮어 쓰기를 한다.
         pyautogui.press(['tab', 'enter'])    # 다른 이름으로 저장 확인 -> 예(Y) -> enter
     except Exception as ex:
         print(ex)
-        pyautogui.click(x=640, y=10)   # excel 'File' setFocus
-    pyautogui.hotkey('ctrl', 'f12')   # 열기
-
+    '''
+    pyautogui.hotkey('alt', 'f2')   # 다른 이름으로 저장
+    time.sleep(1)
+    #save_file_name = 'order_' + type_day
+    save_file_name = '000_' + order_day
+    pyautogui.typewrite(save_file_name, interval=0.25)
+    #pyautogui.typewrite(['a', 'b', 'c'])
+    pyautogui.press('enter')    # 저장(S)
+    '''
     pyautogui.click(x=640, y=10)   # excel 'File' setFocus
-    pyautogui.hotkey('ctrl', 'f12')   # 열기
-    pyautogui.click(x=222, y=141)   # excel File select
-    pyautogui.hotkey('ctrl', 'c')   # 클립보드 복사
-    pyautogui.hotkey('alt', 'f4')    # '열기' 창 종료
 
-    pyautogui.hotkey('alt', 'f4')    # 'excel' 창 종료
+    pyautogui.hotkey('ctrl', 'f12', interval = 0.5)   # 열기
+    time.sleep(0.5)
+    pyautogui.click(x=222, y=141)   # excel File select
+    time.sleep(0.5)
+    pyautogui.hotkey('ctrl', 'c', interval = 0.5)   # 클립보드 복사
+    time.sleep(0.5)
+    pyautogui.hotkey('alt', 'f4', interval = 0.5)    # '열기' 창 종료
+    time.sleep(0.5)
+    pyautogui.click(x=640, y=10)   # excel 'File' setFocus
+    time.sleep(0.5)
+    pyautogui.hotkey('alt', 'f4', interval = 0.5)    # 'excel' 창 종료
 
 def main():
-    today = datetime.datetime.today() # datetime.datetime.now
-    yesterday = today + datetime.timedelta(days = -1) # 오늘에서 1일을 빼서 어제를 구한다
-    order_day = yesterday.strftime('%Y%m%d')
+
+    # from, to
+    order_day = parameter_check()
 
     nsm_login()
+    time.sleep(5)
     job_page_open_001()
-    job_page_set_001(order_day, order_day)
+    job_page_set_001(order_day[0], order_day[1])
     job_main_001(order_day)
 
 if __name__ == '__main__':
