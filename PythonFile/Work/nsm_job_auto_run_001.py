@@ -142,7 +142,6 @@ def main():
 
     # from, to
     order_day = parameter_check()
-
     nsm_login()
     time.sleep(5)
     job_page_open_001()
