@@ -63,8 +63,7 @@ def save_excel_file(data_file_path, save_df):
 
 
 def save_text_file(data_file_path, save_text):
-    start, ext = os.path.splitext(
-        data_file_path)  # ('C:\\Users\\김진태\\Jupyter_Folder\\Data\\order20190401to0419', '.xlsx')
+    start, ext = os.path.splitext(data_file_path)  # ('C:\\Users\\김진태\\Jupyter_Folder\\Data\\order20190401to0419', '.xlsx')
     tail = '' + "_{:%Y%m%d%H%M%S}".format(datetime.datetime.now())  # '_20190503135732'
     save_file_name = start + tail + '.txt'
 
@@ -72,13 +71,14 @@ def save_text_file(data_file_path, save_text):
         f.write(save_text)
 
 """
-command:>python 더존NSM발주정보확인_ver2.py -f C:\\Data\\Sheet1.xlsx
+command:>python 더존NSM발주정보확인_ver2.py -f C:\Data\Sheet1.xlsx -s
 """
 def main():
     print('{0}[{1:^21}]{2}'.format('=' * 20, '더존NSM 발주정보 확인(클라우드사업부 전용)', '=' * 20))
     print('{:>72}'.format('2019.05.03 K.J.T'))
     print('-'*76)
 
+    is_save_excel_file = False
     options_len = len(sys.argv)
     if options_len is 1:
         cur_dir = os.getcwd()
@@ -87,13 +87,17 @@ def main():
     elif options_len is 3:
         data_file_path = sys.argv[2]
         cur_dir, file_name = os.path.split(sys.argv[2])
+    elif options_len is 4:
+        data_file_path = sys.argv[2]
+        cur_dir, file_name = os.path.split(sys.argv[2])
+        is_save_excel_file = True
 
     if not os.path.exists(data_file_path):
         print('실패! ' + data_file_path + ' file not found!! ')
         print('Exists files :')
         print(os.listdir(cur_dir))
         print('program exit... good-bye!')
-        exit()
+        sys.exit()
 
     # 프로그램 시작 시간 표시
     start_dt = datetime.datetime.now()
@@ -103,12 +107,12 @@ def main():
     print('시작시간:' + start_dt.strftime('%Y-%m-%d, %H:%M:%S')) #'2019-04-19, 13:31:11'
     print('=-='*25) # 줄긋기
 
-    print('reading file : data_file_path')
+    print('reading file : ', data_file_path)
     df = pd.read_excel(data_file_path, Sheet_name='Sheet1')
 
     df2 = get_filter_dataframe(df)
 
-    #save_excel_file(data_file_path, df2)
+    if is_save_excel_file: save_excel_file(data_file_path, df2)
 
     # 업체명/솔루션/년금액/센터/담당자/판매유형
     save_text = ''

@@ -138,10 +138,12 @@ def job_main_001(order_day):
     time.sleep(0.5)
     pyautogui.hotkey('alt', 'f4', interval = 0.5)    # 'excel' 창 종료
 
+# 해상도 1280 x 1024 기준
 def main():
 
     # from, to
     order_day = parameter_check()
+
     nsm_login()
     time.sleep(5)
     job_page_open_001()
