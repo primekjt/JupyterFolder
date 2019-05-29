@@ -17,6 +17,8 @@ app.UntitledNotepad.print_control_identifiers()
 app.UntitledNotepad.menu_select("도움말(&H)->메모장 정보(&A)")
 #app['', '제목 없음 - 메모장'].menu_select("도움말(&H)->메모장 정보(&A)")# Click on a button
 
+app['메모장 정보'].print_control_identifiers()
+
 app['메모장 정보'].확인.click()
 #app.AboutNotepad.확인.click()
 # Type a text string

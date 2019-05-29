@@ -1,6 +1,7 @@
 ﻿import pandas as pd
 #import xlrd
 import os
+import sys
 import re
 import datetime
 
@@ -70,19 +71,27 @@ def save_text_file(data_file_path, save_text):
     with open(save_file_name, 'w') as f:
         f.write(save_text)
 
-
+"""
+command:>python 더존NSM발주정보확인_ver2.py -f C:\\Data\\Sheet1.xlsx
+"""
 def main():
     print('{0}[{1:^21}]{2}'.format('=' * 20, '더존NSM 발주정보 확인(클라우드사업부 전용)', '=' * 20))
     print('{:>72}'.format('2019.05.03 K.J.T'))
     print('-'*76)
 
-    DATA_PATH = "C:\\Temp\\NsmData\\"
-    data_file_path = DATA_PATH + 'Sheet1.xlsx'
+    options_len = len(sys.argv)
+    if options_len is 1:
+        cur_dir = os.getcwd()
+        file_name = 'Sheet1.xlsx'
+        data_file_path = os.path.join(cur_dir, file_name)
+    elif options_len is 3:
+        data_file_path = sys.argv[2]
+        cur_dir, file_name = os.path.split(sys.argv[2])
 
     if not os.path.exists(data_file_path):
         print('실패! ' + data_file_path + ' file not found!! ')
         print('Exists files :')
-        print(os.listdir(DATA_PATH))
+        print(os.listdir(cur_dir))
         print('program exit... good-bye!')
         exit()
 
@@ -137,7 +146,7 @@ def main():
     save_text_file(data_file_path, save_text)
 
     if df2.shape[0]:
-        save_file_path = DATA_PATH + 'order' + df2['주문일자'].values[0].replace('-', '') + "_{:%Y%m%d%H%M%S}".format(
+        save_file_path = cur_dir + '\\\\order' + df2['주문일자'].values[0].replace('-', '') + "_{:%Y%m%d%H%M%S}".format(
             datetime.datetime.now()) + '.xlsx'
         print('changed file name : ' + save_file_path)
         os.rename(data_file_path, save_file_path)
