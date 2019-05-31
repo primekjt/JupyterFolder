@@ -152,9 +152,9 @@ def main():
 
 if __name__ == '__main__':
     try:
-        #nsm_set_focus()
-        excel_sheet1_set_focus()
-        #main()
+        nsm_set_focus()
+        #excel_sheet1_set_focus()
+        main()
     except Exception as ex:
         print("Exception: ", ex)
         sys.exit()
