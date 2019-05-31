@@ -4,7 +4,9 @@ import os
 import sys
 import time
 import datetime
-import pyperclip
+#import pyperclip
+import win32clipboard
+import win32con
 
 """
 https://anaconda.org 사이트에서 필요한 모듈을 검색하여 사용하면 된다.
@@ -42,7 +44,13 @@ def parameter_check():
     return (order_from_day, order_to_day)   # tuple return
 
 def nsm_login():
-    pyperclip.copy('prime200*')
+    #pyperclip.copy('prime200*')
+
+    win32clipboard.OpenClipboard()
+    win32clipboard.EmptyClipboard()
+    win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, 'prime200*')
+    win32clipboard.CloseClipboard()
+
     pyautogui.click(x=567, y=550)   # login dailog setFocus
     pyautogui.hotkey('ctrl', 'v', interval = 0.15)
     pyautogui.click(x=711, y=541)   # 로그인 버튼 클릭
@@ -138,15 +146,19 @@ def job_main_001(order_day):
     time.sleep(0.5)
     pyautogui.hotkey('alt', 'f4', interval = 0.5)    # 'excel' 창 종료
 
+# 해상도 1280 x 1024 기준
 def main():
 
     # from, to
     order_day = parameter_check()
+
     nsm_login()
+"""
     time.sleep(5)
     job_page_open_001()
     job_page_set_001(order_day[0], order_day[1])
     job_main_001(order_day)
+"""
 
 if __name__ == '__main__':
     main()
