@@ -20,4 +20,9 @@ def main():
     mousePosition()
 
 if __name__ == '__main__':
+
+    # move mouse pointer to center of screen
+    screenWidth, screenHeight = pyautogui.size()
+    print('Screen size : width(%d) , height(%d)' %(screenWidth, screenHeight))
+
     main()
