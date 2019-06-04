@@ -53,11 +53,15 @@ def nsm_set_focus():
     railwindow.set_focus()
 
 def excel_sheet1_set_focus():
-    app = pwa.application.Application().connect(title=u'Sheet1 - Excel(\uc6d0\uaca9)', class_name='RAIL_WINDOW')
-    railwindow = app.RAIL_WINDOW
-    railwindow.set_focus()
+    app = pwa.application.Application().connect(title=u'Sheet1 - Excel(원격)', class_name='RAIL_WINDOW')
+    # window_handle = pwa.findwindows.find_window(title=u'Sheet1 - Excel(원격)')
+    # app = pwa.application.Application().connect(handle=window_handle)
+    wnd = app.RAIL_WINDOW
+    wnd.maximize()
+    wnd.set_focus()
+    #wnd.draw_outline()
 
-def nsm_login():
+def nsm_login(user_id, user_pwd):
     #pyperclip.copy('prime200*')
     clipboard.copy('prime200*')
     pyautogui.click(x=890, y=580)   # login dailog setFocus
@@ -144,7 +148,11 @@ def main():
 
     # from, to
     order_day = parameter_check()
-    nsm_login()
+    user_id = 'BIZ15990'
+    user_pwd = input('NSM PASSWORD : ')
+
+    nsm_set_focus()
+    nsm_login(user_id, user_pwd)
     time.sleep(5)
     job_page_open_001()
     job_page_set_001(order_day[0], order_day[1])

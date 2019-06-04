@@ -7,6 +7,7 @@ import datetime
 #import pyperclip
 import win32clipboard
 import win32con
+import pywinauto as pwa
 
 """
 https://anaconda.org 사이트에서 필요한 모듈을 검색하여 사용하면 된다.
@@ -43,17 +44,38 @@ def parameter_check():
     print('to day : %s, from day : %s' % (order_from_day, order_to_day))
     return (order_from_day, order_to_day)   # tuple return
 
-def nsm_login():
-    #pyperclip.copy('prime200*')
+def nsm_set_focus():
+    #app = pwa.application.Application().connect(title=u'NSM \ub85c\uadf8\uc778(\uc6d0\uaca9)', class_name='RAIL_WINDOW')
+    app = pwa.application.Application().connect(title_re=u'NSM .*(원격)', class_name='RAIL_WINDOW')
+    railwindow = app.RAIL_WINDOW
+    #railwindow.draw_outline()
+    #railwindow.print_control_identifiers()
+    railwindow.set_focus()
+    return railwindow
 
+def excel_sheet1_set_focus():
+    app = pwa.application.Application().connect(title=u'Sheet1 - Excel(원격)', class_name='RAIL_WINDOW')
+    # window_handle = pwa.findwindows.find_window(title=u'Sheet1 - Excel(원격)')
+    # app = pwa.application.Application().connect(handle=window_handle)
+    wnd = app.RAIL_WINDOW
+    wnd.maximize()
+    wnd.set_focus()
+    #wnd.draw_outline()
+
+def nsm_login(user_id, user_pwd):
+    login_dlg = nsm_set_focus()
+
+    #pyperclip.copy(input_pwd)
     win32clipboard.OpenClipboard()
     win32clipboard.EmptyClipboard()
-    win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, 'prime200*')
+    win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, user_pwd)
     win32clipboard.CloseClipboard()
 
     pyautogui.click(x=567, y=550)   # login dailog setFocus
     pyautogui.hotkey('ctrl', 'v', interval = 0.15)
     pyautogui.click(x=711, y=541)   # 로그인 버튼 클릭
+
+    time.sleep(3)
 
 def job_page_open_001():
     # move mouse pointer to center of screen
@@ -112,8 +134,10 @@ def job_main_001(order_day):
 
     time.sleep(3)
 
-    pyautogui.click(x=640, y=10)   # excel 'File' setFocus
-    time.sleep(1)
+    #pyautogui.click(x=640, y=10)   # excel 'File' setFocus
+    #time.sleep(1)
+
+    excel_sheet1_set_focus()
 
     pyautogui.hotkey('alt', 'f2', interval = 0.5)  # 다른 이름으로 저장
     time.sleep(1)
@@ -132,7 +156,8 @@ def job_main_001(order_day):
     #pyautogui.typewrite(['a', 'b', 'c'])
     pyautogui.press('enter')    # 저장(S)
     '''
-    pyautogui.click(x=640, y=10)   # excel 'File' setFocus
+    #pyautogui.click(x=640, y=10)   # excel 'File' setFocus
+    excel_sheet1_set_focus()
 
     pyautogui.hotkey('ctrl', 'f12', interval = 0.5)   # 열기
     time.sleep(0.5)
@@ -148,17 +173,20 @@ def job_main_001(order_day):
 
 # 해상도 1280 x 1024 기준
 def main():
-
     # from, to
     order_day = parameter_check()
 
-    nsm_login()
-"""
-    time.sleep(5)
+    user_id = 'BIZ15990'
+    user_pwd = input('NSM PASSWORD : ')
+
+    nsm_login(user_id, user_pwd)
     job_page_open_001()
     job_page_set_001(order_day[0], order_day[1])
     job_main_001(order_day)
-"""
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as ex:
+        print("Exception: ", ex)
+        sys.exit()
