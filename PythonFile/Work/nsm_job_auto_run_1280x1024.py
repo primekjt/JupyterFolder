@@ -46,7 +46,8 @@ def parameter_check():
 
 def nsm_set_focus():
     #app = pwa.application.Application().connect(title=u'NSM \ub85c\uadf8\uc778(\uc6d0\uaca9)', class_name='RAIL_WINDOW')
-    app = pwa.application.Application().connect(title_re=u'NSM .*(원격)', class_name='RAIL_WINDOW')
+    #app = pwa.application.Application().connect(title_re=u'NSM .*(원격)', class_name='RAIL_WINDOW')
+    app = pwa.application.Application().connect(title=u'NSM 로그인(원격)', class_name='RAIL_WINDOW')
     railwindow = app.RAIL_WINDOW
     #railwindow.draw_outline()
     #railwindow.print_control_identifiers()
@@ -158,18 +159,19 @@ def job_main_001(order_day):
     '''
     #pyautogui.click(x=640, y=10)   # excel 'File' setFocus
     excel_sheet1_set_focus()
-
     pyautogui.hotkey('ctrl', 'f12', interval = 0.5)   # 열기
     time.sleep(0.5)
     pyautogui.click(x=222, y=141)   # excel File select
     time.sleep(0.5)
     pyautogui.hotkey('ctrl', 'c', interval = 0.5)   # 클립보드 복사
+    """
     time.sleep(0.5)
     pyautogui.hotkey('alt', 'f4', interval = 0.5)    # '열기' 창 종료
     time.sleep(0.5)
     pyautogui.click(x=640, y=10)   # excel 'File' setFocus
     time.sleep(0.5)
     pyautogui.hotkey('alt', 'f4', interval = 0.5)    # 'excel' 창 종료
+    """
 
 # 해상도 1280 x 1024 기준
 def main():
@@ -183,6 +185,8 @@ def main():
     job_page_open_001()
     job_page_set_001(order_day[0], order_day[1])
     job_main_001(order_day)
+
+    pyautogui.alert('작업이 끝났습니다!')
 
 if __name__ == '__main__':
     try:

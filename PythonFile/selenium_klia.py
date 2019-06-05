@@ -33,7 +33,7 @@ def klia_test():
 
     driver = webdriver.Chrome('c:\\chromedriver_win32\chromedriver.exe', chrome_options=options)
     # driver.set_window_size('1280','1024')
-    # driver.maximize_window()
+    driver.maximize_window()
     driver.implicitly_wait(2)  # seconds
 
     # navigating to a webpage
