@@ -48,7 +48,10 @@ def notepad_test():
     screenWidth, screenHeight = pyautogui.size()
     pyautogui.moveTo(screenWidth / 2, screenHeight / 2)
 
-    pyautogui.typewrite("abcdeefghizklmn", interval=0.5)
+    pyautogui.typewrite("RPA Programming\n", interval=0.25)
+    pyautogui.typewrite("(Robotic Process Automation)\n", interval=0.1)
+    pyautogui.typewrite("---The End---\n", interval=0.25)
+    #pyautogui.typewrite(u"업무환경 자동화", interval=0.5) #한글 안써짐
 
 # - 이미지 File이름, 검출 대상이 될 영역을 입력받아 이미지를 검출하는 함수
 def findLcationWithImage(fileName, startPos, confidence=.7):
@@ -126,8 +129,8 @@ def nsm_test():
 
 def main():
     #mspaint_test()
-    #notepad_test()
-    nsm_test()
+    notepad_test()
+    #nsm_test()
 
     #pyautogui.alert('This displays some text with an OK button.')
 
