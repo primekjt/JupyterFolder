@@ -24,7 +24,8 @@ def mspaint_test():
 
     # move mouse pointer to center of screen
     screenWidth, screenHeight = pyautogui.size()
-    pyautogui.moveTo(screenWidth/2, screenHeight/2)
+    #pyautogui.moveTo(screenWidth/2, screenHeight/2)
+    pyautogui.moveTo(screenWidth/4, screenHeight/4)
 
     # drag mouse
     distance = 200
@@ -128,8 +129,9 @@ def nsm_test():
 
 
 def main():
-    #mspaint_test()
-    notepad_test()
+    mspaint_test()
+
+    #notepad_test()
     #nsm_test()
 
     #pyautogui.alert('This displays some text with an OK button.')
