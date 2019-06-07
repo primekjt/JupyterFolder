@@ -190,7 +190,7 @@ def main():
 
 if __name__ == '__main__':
     try:
-        main()
+        main()   # PC
     except Exception as ex:
         print("Exception: ", ex)
         sys.exit()
