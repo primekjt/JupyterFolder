@@ -8,6 +8,8 @@ import datetime
 import clipboard
 import pywinauto as pwa
 
+TEST_USER_PW = 'abcd1234'
+
 """
 https://anaconda.org 사이트에서 필요한 모듈을 검색하여 사용하면 된다.
 conda install -c conda-forge pyperclip
@@ -149,7 +151,8 @@ def main():
     # from, to
     order_day = parameter_check()
     user_id = 'BIZ15990'
-    user_pwd = input('NSM PASSWORD : ')
+    #user_pwd = input('NSM PASSWORD : ')
+    user_pwd = TEST_USER_PW
 
     nsm_set_focus()
     nsm_login(user_id, user_pwd)

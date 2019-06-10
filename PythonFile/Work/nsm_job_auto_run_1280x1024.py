@@ -13,6 +13,7 @@ import pywinauto as pwa
 https://anaconda.org 사이트에서 필요한 모듈을 검색하여 사용하면 된다.
 conda install -c conda-forge pyperclip
 """
+TEST_USER_PW = 'abcd1234'
 
 # setting fail safes
 pyautogui.FAIL_SAFE = True
@@ -179,7 +180,8 @@ def main():
     order_day = parameter_check()
 
     user_id = 'BIZ15990'
-    user_pwd = input('NSM PASSWORD : ')
+    #user_pwd = input('NSM PASSWORD : ')
+    user_pwd = TEST_USER_PW
 
     nsm_login(user_id, user_pwd)
     job_page_open_001()
@@ -192,5 +194,7 @@ if __name__ == '__main__':
     try:
         main()   # PC
     except Exception as ex:
-        print("Exception: ", ex)
+        msg = "Exception: " + ex
+        print(msg)
+        pyautogui.alert(msg)
         sys.exit()
